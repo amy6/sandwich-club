@@ -8,6 +8,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.udacity.sandwichclub.adapter.SandwichAdapter;
+import com.udacity.sandwichclub.model.Sandwich;
+import com.udacity.sandwichclub.utils.JsonUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import butterknife.internal.Utils;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -17,9 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] sandwiches = getResources().getStringArray(R.array.sandwich_names);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, sandwiches);
+        List<Sandwich> sandwichArrayList = new ArrayList<>();
+        String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
+        for (String json : sandwiches) {
+            Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+            sandwichArrayList.add(sandwich);
+        }
+        SandwichAdapter adapter = new SandwichAdapter(this, sandwichArrayList);
 
         // Simplification: Using a ListView instead of a RecyclerView
         ListView listView = findViewById(R.id.sandwiches_listview);
