@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.R;
 import com.udacity.sandwichclub.model.Sandwich;
@@ -38,11 +40,11 @@ public class SandwichAdapter extends ArrayAdapter<Sandwich> {
             convertView.setTag(holder);
         }
         holder = (SandwichViewHolder) convertView.getTag();
+        holder.progressBar.setVisibility(View.VISIBLE);
         if (sandwich != null) {
             Picasso.with(getContext())
                     .load(sandwich.getImage())
-                    .placeholder(R.drawable.placeholder)
-                    .into(holder.imageView);
+                    .into(holder.imageView, new ImageLoadCallback(holder.progressBar));
             holder.name.setText(sandwich.getMainName());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 holder.name.setGravity(position % 2 == 0 ? Gravity.START : Gravity.END);
@@ -57,9 +59,31 @@ public class SandwichAdapter extends ArrayAdapter<Sandwich> {
         ImageView imageView;
         @BindView(R.id.name)
         TextView name;
+        @BindView(R.id.progressBar)
+        ProgressBar progressBar;
 
         SandwichViewHolder (View itemView) {
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class ImageLoadCallback implements Callback {
+        ProgressBar progressBar;
+
+        public ImageLoadCallback(ProgressBar progressBar) {
+            this.progressBar = progressBar;
+        }
+
+        @Override
+        public void onSuccess() {
+            if (progressBar != null) {
+                progressBar.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onError() {
+
         }
     }
 }
