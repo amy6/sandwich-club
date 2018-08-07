@@ -1,26 +1,19 @@
-# Sandwich Club Project Starter Code
+# Sandwich Club
 
-## Project Overview
-In this project, you will complete the **Sandwich Club** app to
-show the details of each sandwich once it is selected.
+**Sandwich Club** app is developed as part of Udacity Android Developer Nanodegree The app shows a list of sandwiches and displays the details of each sandwich once it is selected.
 
-## Why this Project
+## App Screenshots
 
-Building a layout and populating its fields from data received as JSON
-is a common task for Android Developers. Although JSON parsing is usually
-done using libraries, writing the JSON parsing for  this project will
-help you to better understand how it is processed.
+**List View**
 
-## What Will I Learn?
-Through this project, you will:
-- Learn how to submit projects for review
-- Practice JSON parsing to a model object
-- Design an activity layout
-- Populate all fields in the layout accordingly
+![list1](https://user-images.githubusercontent.com/5392993/43794936-733c38fa-9a9d-11e8-8070-8329d1e93333.jpg) ![list2](https://user-images.githubusercontent.com/5392993/43794937-7370375e-9a9d-11e8-8564-327cdfe53970.jpg)
 
-## How Do I Complete this Project?
-Download the [Sandwich Club app starter code.](https://github.com/udacity/sandwich-club-starter-code)
 
-Design the layout for the detail activity so the different elements
-display in a sensible way. Implement the JSON parsing in JsonUtils so it
-produces a Sandwich Object that can be used to populate the UI that you designed.
+**Grid View**
+
+![grid1](https://user-images.githubusercontent.com/5392993/43794934-72c2472a-9a9d-11e8-8f3f-ba3962d68f40.jpg) ![grid2](https://user-images.githubusercontent.com/5392993/43794935-72f6db8e-9a9d-11e8-93fe-4a248d4cbc01.jpg)
+
+**Details of a selected sandwich**
+
+![sandwich1](https://user-images.githubusercontent.com/5392993/43794938-73a648a8-9a9d-11e8-9bd0-2d336a42f874.jpg) ![sandwich2](https://user-images.githubusercontent.com/5392993/43794940-73d97930-9a9d-11e8-80b0-d6599125fd52.jpg)
+
