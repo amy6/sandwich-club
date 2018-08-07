@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
+import com.udacity.sandwichclub.utils.ImageLoadCallback;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
 import java.util.List;
@@ -23,7 +25,13 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         ImageView ingredientsIv = findViewById(R.id.image_iv);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -49,7 +57,8 @@ public class DetailActivity extends AppCompatActivity {
         populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
-                .into(ingredientsIv);
+                .error(R.drawable.ic_error_outline)
+                .into(ingredientsIv, new ImageLoadCallback(progressBar, ingredientsIv, true));
 
         setTitle(sandwich.getMainName());
     }
@@ -71,6 +80,7 @@ public class DetailActivity extends AppCompatActivity {
         List<String> alsoKnownAsList = sandwich.getAlsoKnownAs();
         if (alsoKnownAsList.size() > 0) {
             for (int i = 0; i < alsoKnownAsList.size(); i++) {
+                alsoKnownAs.append("\u2022 ");
                 alsoKnownAs.append(alsoKnownAsList.get(i));
                 if (i < alsoKnownAsList.size() - 1) {
                     alsoKnownAs.append("\n");
@@ -84,6 +94,7 @@ public class DetailActivity extends AppCompatActivity {
         List<String> ingredientsList = sandwich.getIngredients();
         if (ingredientsList.size() > 0) {
             for (int i = 0; i < ingredientsList.size(); i ++) {
+                ingredients.append("\u25AA ");
                 ingredients.append(ingredientsList.get(i));
                 if (i < ingredientsList.size() - 1) {
                       ingredients.append("\n");
@@ -93,5 +104,11 @@ public class DetailActivity extends AppCompatActivity {
             ingredients.setText(R.string.not_available);
         }
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }
