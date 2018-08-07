@@ -5,9 +5,22 @@
     android:layout_height="match_parent"
     tools:context="com.udacity.sandwichclub.MainActivity">
 
-    <ListView
-        android:id="@+id/sandwiches_listview"
+    <ViewSwitcher
+        android:id="@+id/view_switcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/sandwiches_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <GridView
+            android:id="@+id/sandwiches_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"/>
+
+    </ViewSwitcher>
 
 </RelativeLayout>

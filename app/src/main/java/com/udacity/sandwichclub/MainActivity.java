@@ -3,10 +3,14 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ViewSwitcher;
 
 import com.udacity.sandwichclub.adapter.SandwichAdapter;
 import com.udacity.sandwichclub.model.Sandwich;
@@ -44,11 +48,40 @@ public class MainActivity extends AppCompatActivity {
                 launchDetailActivity(position);
             }
         });
+
+        GridView gridView = findViewById(R.id.sandwiches_gridview);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                launchDetailActivity(position);
+            }
+        });
     }
 
     private void launchDetailActivity(int position) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_POSITION, position);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ViewSwitcher viewSwitcher = findViewById(R.id.view_switcher);
+        switch (item.getItemId()) {
+            case R.id.listView:
+                viewSwitcher.showNext();
+                break;
+            case R.id.gridView:
+                viewSwitcher.showPrevious();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
