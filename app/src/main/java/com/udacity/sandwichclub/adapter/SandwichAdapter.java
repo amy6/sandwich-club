@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.R;
 import com.udacity.sandwichclub.model.Sandwich;
@@ -57,7 +56,7 @@ public class SandwichAdapter extends ArrayAdapter<Sandwich> {
 
     class SandwichViewHolder {
 
-        @BindView(R.id.image)
+        @BindView(R.id.image_iv)
         ImageView imageView;
         @BindView(R.id.name)
         TextView name;

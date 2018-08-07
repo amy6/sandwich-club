@@ -13,7 +13,7 @@
     <!-- Error messages-->
     <string name="detail_error_message">Sandwich data not available</string>
     <string name="not_available">Not Available</string>
-    <string name="no_desc_available">No description available</string>
+    <string name="toggle_view">Toggle View</string>
 
     <string-array name="sandwich_details">
         <item>{\"name\":{\"mainName\":\"Ham and cheese

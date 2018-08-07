@@ -15,12 +15,14 @@
         android:id="@+id/image_iv"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:contentDescription="@string/no_desc_available"
+        android:contentDescription="@string/sandwich_picture_content_description"
         android:elevation="8dp"
+        android:transitionName="image"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        tools:targetApi="lollipop" />
 
         <ProgressBar
             android:id="@+id/progressBar"
