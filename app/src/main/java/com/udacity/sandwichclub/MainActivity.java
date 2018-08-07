@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static final String IS_LISTVIEW_DISPLAYED = "VIEW_TYPE";
 
     @BindView(R.id.sandwiches_listview)
     ListView listView;
@@ -114,25 +113,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*@Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //save the current view type - listview/gridview
-        outState.putBoolean(IS_LISTVIEW_DISPLAYED, isListDisplayed);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        //restore the view type if it was saved on a orientation change
-        isListDisplayed = savedInstanceState.getBoolean(IS_LISTVIEW_DISPLAYED);
-        if (isListDisplayed) {
-            switcher.showNext();
-            isListDisplayed = false;
-        } else {
-            switcher.showPrevious();
-            isListDisplayed = true;
-        }
-    }*/
 }

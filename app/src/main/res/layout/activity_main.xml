@@ -9,12 +9,14 @@
     <ListView
         android:id="@+id/sandwiches_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"/>
 
     <GridView
         android:id="@+id/sandwiches_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2" />
+        android:numColumns="2"
+        android:background="?selectableItemBackground"/>
 
 </ViewSwitcher>
