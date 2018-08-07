@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,15 +19,24 @@ import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import butterknife.internal.Utils;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private ViewSwitcher switcher;
+    private static final String IS_LISTVIEW_DISPLAYED = "VIEW_TYPE";
+
+    @BindView(R.id.sandwiches_listview)
+    ListView listView;
+    @BindView(R.id.sandwiches_gridview)
+    GridView gridView;
+    @BindView(R.id.view_switcher)
+    ViewSwitcher switcher;
+
+    //flag to indicate toggling between listview and gridview
     private boolean isListDisplayed;
 
     @Override
@@ -36,19 +44,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        switcher = findViewById(R.id.view_switcher);
+        ButterKnife.bind(this);
+
         isListDisplayed = true;
 
+        //initialize array list to hold sandwich details
         List<Sandwich> sandwichArrayList = new ArrayList<>();
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         for (String json : sandwiches) {
+            //parse the json for each sandwich and add the sandwich object to the array list
             Sandwich sandwich = JsonUtils.parseSandwichJson(json);
             sandwichArrayList.add(sandwich);
         }
+        //initialize custom adapter
         SandwichAdapter adapter = new SandwichAdapter(this, sandwichArrayList);
 
-        // Simplification: Using a ListView instead of a RecyclerView
-        ListView listView = findViewById(R.id.sandwiches_listview);
+        //set up ListView
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GridView gridView = findViewById(R.id.sandwiches_gridview);
+        //set up GridView
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,10 +78,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * fires an intent from the main screen to the detailed screen
+     *
+     * @param position  position of the item
+     * @param imageView reference to the sandwich imageview
+     */
     private void launchDetailActivity(int position, ImageView imageView) {
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_POSITION, position);
-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,imageView, ViewCompat.getTransitionName(imageView));
+        //define shared element transition animation
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, ViewCompat.getTransitionName(imageView));
         startActivity(intent, options.toBundle());
     }
 
@@ -82,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //handle toggling between listview and gridview using switcher
         if (item.getItemId() == R.id.toggleView) {
             if (isListDisplayed) {
                 switcher.showNext();
@@ -95,4 +114,25 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //save the current view type - listview/gridview
+        outState.putBoolean(IS_LISTVIEW_DISPLAYED, isListDisplayed);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //restore the view type if it was saved on a orientation change
+        isListDisplayed = savedInstanceState.getBoolean(IS_LISTVIEW_DISPLAYED);
+        if (isListDisplayed) {
+            switcher.showNext();
+            isListDisplayed = false;
+        } else {
+            switcher.showPrevious();
+            isListDisplayed = true;
+        }
+    }*/
 }

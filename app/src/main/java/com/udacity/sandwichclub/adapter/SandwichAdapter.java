@@ -23,6 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+//custom ArrayAdapter to populate custom listview/gridview
 public class SandwichAdapter extends ArrayAdapter<Sandwich> {
 
     public SandwichAdapter(@NonNull Context context, @NonNull List<Sandwich> objects) {
@@ -34,19 +36,26 @@ public class SandwichAdapter extends ArrayAdapter<Sandwich> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Sandwich sandwich = getItem(position);
         SandwichViewHolder holder;
+        //inflate a new view if no reusable view exists
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_sandwich_item, parent, false);
             holder = new SandwichViewHolder(convertView);
             convertView.setTag(holder);
         }
+        //reuse an existing view if it exists
         holder = (SandwichViewHolder) convertView.getTag();
+        //make the progressbar visible to indicate the progress of loading the view
         holder.progressBar.setVisibility(View.VISIBLE);
         if (sandwich != null) {
             Picasso.with(getContext())
                     .load(sandwich.getImage())
+                    //set error image
                     .error(R.drawable.ic_error_outline)
+                    //implement callback to handle error from getting data to listview/gridview
                     .into(holder.imageView, new ImageLoadCallback(holder.progressBar, holder.imageView, false));
             holder.name.setText(sandwich.getMainName());
+
+            //set sandwich name text to switch alignment alternatively
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 holder.name.setGravity(position % 2 == 0 ? Gravity.START : Gravity.END);
             }
@@ -54,6 +63,7 @@ public class SandwichAdapter extends ArrayAdapter<Sandwich> {
         return convertView;
     }
 
+    //ViewHolder class to help reduce the calls to findViewById method
     class SandwichViewHolder {
 
         @BindView(R.id.image_iv)
